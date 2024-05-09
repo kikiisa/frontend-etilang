@@ -11,7 +11,7 @@ export const serviceImage = async (image) => {
             },
         })
         .then((response) => {
-            alert(response.data);
+            alert(response.data.result);
             // console.log(response.data);
         })
         .catch((err) => {
