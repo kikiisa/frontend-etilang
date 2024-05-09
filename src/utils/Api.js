@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "https://386d-36-85-223-195.ngrok-free.app/api/";
+const baseUrl = "https://6792-36-85-223-195.ngrok-free.app/api/";
 
 export const serviceImage = async (image) => {
     const formData = new FormData();
