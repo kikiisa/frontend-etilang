@@ -1,10 +1,12 @@
 <script>
 import cameraComponents from "../components/cameraComponents.vue";
 import NavbarComponents from "../components/NavbarComponents.vue";
+import ModalComponentsAngkutanUmun from "../components/ModalComponentsAngkutanUmun.vue";
 export default {
   components: {
     cameraComponents,
-    NavbarComponents
+    NavbarComponents,
+    ModalComponentsAngkutanUmun
   },
 };
 </script>
@@ -14,6 +16,7 @@ export default {
     <div class="row justify-content-center">
         <NavbarComponents/>
         <cameraComponents/>
+        <ModalComponentsAngkutanUmun/>
     </div>
   </div>
 </template>

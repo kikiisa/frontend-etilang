@@ -17,4 +17,16 @@ function nameFileRandom(file) {
     return file + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-export { dataURLToBlob,nameFileRandom }
+
+function stringFilter(kalimat){
+    let tanpaSimbol = kalimat.replace(/[^\w\s]/gi, '');
+    return tanpaSimbol
+}
+
+function filterSpasi(kalimat)
+{
+    let tanpaSpasiDanKurung = stringFilter(kalimat).replace(/\s|/g, '');
+    return tanpaSpasiDanKurung
+}
+
+export { dataURLToBlob,nameFileRandom,filterSpasi }

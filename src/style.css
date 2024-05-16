@@ -1,0 +1,10 @@
+:root {
+	--hue: 223;
+	--bg: hsl(var(--hue),90%,95%);
+	--fg: hsl(var(--hue),90%,5%);
+	--trans-dur: 0.3s;
+	
+}
+.app{   
+    background-color: var(--bg);    
+}
