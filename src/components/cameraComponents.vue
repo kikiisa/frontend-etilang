@@ -2,7 +2,7 @@
 import Camera from "simple-vue-camera";
 import { ref, reactive } from "vue";
 import { dataURLToBlob, filterSpasi, nameFileRandom } from "../utils/blob";
-import { baseUrl } from "../utils/Api";
+import { service1, service2 } from "../utils/Api";
 import LoadingComponents from "./LoadingComponents.vue";
 import { toastError, toastSuccess } from "../utils/Toast";
 import axios from "axios";
@@ -14,16 +14,21 @@ export default {
   setup() {
     const camera = ref(Camera);
     const isLoading = ref(null);
-    const plateNumber = ref(null);
-    const responseData = reactive({
-      result: "",
-      message: "",
-    });
+    const resultOcr = ref("");
+    const data_plat = ref([]);
+    const category  = ref(null);
+    const message   = ref("");
+
     const resetData = () => {
-      responseData.result = "";
+      resultOcr.value = "";
+      data_plat.value = [];
       isLoading.value = null;
       window.location.reload();
     };
+    const detail = () => 
+    {
+
+    }
     const recognizePicture = async () => {
       const file = await camera.value?.snapshot();
       let reader = new FileReader();
@@ -40,7 +45,7 @@ export default {
           })
         );
         await axios
-          .post(baseUrl + "service-image", formData, {
+          .post(service1 + "service-image", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -48,14 +53,31 @@ export default {
           .then((response) => {
             if (response.data.result == "") {
               console.log(response.data.result);
-
               isLoading.value = false;
               toastError("Plat Nomor Tidak Terdeteksi");
             } else {
-              setInterval(() => {
-                responseData.result = filterSpasi(response.data.result);
-                plateNumber.value = response.data.result;
+              setTimeout(async () => {
                 isLoading.value = false;
+                resultOcr.value = response.data.result;
+                try {
+                  let responseInfoPlatNumber = await axios.post(
+                    `${service2}search-plat-number`,
+                    {
+                      data: response.data.result,
+                    }
+                  );
+                  console.log(responseInfoPlatNumber);
+                  data_plat.value = responseInfoPlatNumber.data.data;
+                  category.value = responseInfoPlatNumber.data.category;
+                  message.value  = responseInfoPlatNumber.data.message;
+                } catch (error) {
+                  console.error(
+                    "Terjadi kesalahan saat melakukan validasi:",
+                    error
+                  );
+                  // Tangani error jika request gagal
+
+                }
               }, 2000);
             }
           })
@@ -71,85 +93,60 @@ export default {
       camera,
       recognizePicture,
       isLoading,
-      responseData,
       resetData,
-      plateNumber,
+      resultOcr,
+      data_plat,
+      category,
+      message
     };
   },
 };
 </script>
 
 <template>
-  <div class="col-lg-8">
-    <div class="card border-0">
-      <div class="card-body">
-        <div
-          class="bg-info p-4 rounded-4 text-center text-light fw-bold mb-3"
-          v-if="isLoading == null"
-        >
-          Foto Plat Nomor Kendaraan 📷
-        </div>
-        <div class="result-scan" v-if="responseData.result != ''">
-          <div class="alert alert-success">Plat Nomor Terdaftar</div>
-          <div class="form-group">
-            <label for="plate-number" class="fw-bold mb-2">Plate Number</label>
-            <input
-              type="text"
-              v-model="plateNumber"
-              id="plate-number"
-              class="form-control fw-bold"
-            />
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="bg-info p-4 rounded-4 text-center text-light fw-bold mb-3">
+            Foto Plat Nomor Kendaraan 📷
           </div>
-          <div class="form-group">
-            <label for="plate-number" class="fw-bold mb-2 mt-3"
-              >Nama Pemilik</label
-            >
-            <input
-              type="text"
-              value="kiki"
-              id="plate-number"
-              class="form-control fw-bold"
-            />
+          <div class="alert alert-info" v-if="message != ''">{{ message }}</div>
+          <camera ref="camera" v-if="isLoading == null" autoplay></camera>
+          <LoadingComponents v-if="isLoading == true" class="text-center" />
+          <input
+            v-if="isLoading == false"
+            type="text"
+            v-model="resultOcr"
+            class="form-control"
+            disabled
+          />
+          <div class="list-data" v-if="data_plat.length > 0">
+            <div class="list-data-angkutan-umum-orang" v-if="category == 1">
+              <h5 class="mb-2 mt-3">Data Plat Nomor Angkutan Umum Orang</h5>
+              <ul class="list-group mt-2" v-for="data in data_plat" :key="data.id">
+                <li class="list-group-item"><p>Plat Nomor : <strong>{{ data.plat_nomor }}</strong></p> <router-link :to="{name: 'detail', params: {id: data.id,category: 1}}" class="btn btn-primary">Detail</router-link></li>
+              </ul>
+            </div>
+            <div class="list-data-plat-kuning" v-if="category == 2">
+              <h5 class="mb-2 mt-3">Data Plat Kuning</h5>
+              <ul class="list-group mt-2" v-for="data in data_plat" :key="data.id">
+                <li class="list-group-item"><p>Plat Nomor : <strong>{{ data.nomor_kendaraan }}</strong></p> <router-link :to="{name: 'detail', params: {id: data.id,category: 2}}" class="btn btn-primary">Detail</router-link></li>
+              
+              </ul>
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="plate-number" class="fw-bold mb-2 mt-3"
-              >Status Kartu Pengawasan :
-              <span class="badge bg-danger">Kadalduarsa</span></label
-            >
-            <span class="badge bg-success"></span>
-            <br />
-            <label for="plate-number" class="fw-bold mb-2 mt-3"
-              >Status Izin Trayek : <span class=""></span
-            ></label>
-            <span class="badge bg-success"></span>
-            <br />
-            <label for="plate-number" class="fw-bold mb-2 mt-3"
-              >Status Kir :
-            </label>
-            <span class="badge bg-success"></span>
+          <div class="add-data" v-if="category == 0">
+              <button class="btn btn-dark mt-3 fw-bold">+ Angkutan Umum Orang</button>
+              <button class="btn btn-dark mt-3 fw-bold ms-2">+ Plat Kuning</button>
           </div>
-
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#angkutan_umum_orang"
-          >
-            Data Angkutan Umum Orang
+          <button class="btn btn-primary fw-bold mt-2" v-if="resultOcr == ''" @click="recognizePicture">
+            Scan Plat Nomor
           </button>
-          <button class="btn btn-warning mt-2 fw-bold mb-4 ms-2">
-            Tambah Data Angkutan Umum Barang
+          <button class="btn btn-dark fw-bold mt-2" @click="resetData">
+            Reset
           </button>
         </div>
-        <camera ref="camera" v-if="isLoading == null" autoplay></camera>
-        <LoadingComponents class="text-center" v-if="isLoading == true" />
-        <button class="btn btn-primary fw-bold mt-2" @click="recognizePicture">
-          Scan Plat Nomor
-        </button>
-        <button class="btn btn-dark ms-2 fw-bold mt-2" @click="resetData">
-          Reset
-        </button>
       </div>
     </div>
   </div>
@@ -157,5 +154,10 @@ export default {
 <style scoped>
 .camera {
   margin-top: 50px;
+}
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

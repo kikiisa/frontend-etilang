@@ -3,10 +3,14 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 const $toast = useToast()
 export const toastSuccess = (message) => 
 {
-    return $toast.success(message)
+    return $toast.success(message,{
+        position: 'top-right'
+    })
 }
 
 export const toastError = (error) => 
 {
-    return $toast.error(error)
+    return $toast.error(error,{
+        position: 'top-right'
+    })
 }

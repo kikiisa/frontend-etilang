@@ -1,7 +1,7 @@
 <template>
-  <main>
+  <main class="text-center">
     <svg
-      class="ip"
+      class="ip text-center"
       viewBox="0 0 256 128"
       width="150px"
       height="128px"
@@ -42,7 +42,7 @@
         </g>
       </g>
     </svg>
-    <p class="text-center fw-bold mt-2">Tunggu Sebentar Ya, Sementara Proses Scaning 🤗🤗</p>
+    <p class="fw-bold mt-2">Tunggu Sebentar Ya 🤗🤗</p>
   </main>
 </template>
 <style scoped>

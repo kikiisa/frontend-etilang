@@ -1,10 +1,78 @@
-:root {
-	--hue: 223;
-	--bg: hsl(var(--hue),90%,95%);
-	--fg: hsl(var(--hue),90%,5%);
-	--trans-dur: 0.3s;
-	
+.slider{
+    max-width: 500px;
 }
-.app{   
-    background-color: var(--bg);    
+
+.home-menu {
+    background: #ececec;
+    border-radius: 10px;
+    color: #fff;
+    border: 1px #e8e8e8 solid;
+}
+.informasi
+{
+    border-color: transparent;
+}
+:root
+{
+    --main-color: #712CF9;
+    --secondary-color:#1a1b27;
+    --mode-dark-color:#212529;
+    --mode-white-color:#ffff;
+    --mode-whiteteal-color:#ececec
+}
+
+.bg-footer {
+    background-color: #ececec;
+}
+
+.bg-dark 
+{
+    background-color: var(--mode-dark-color) !important;
+}
+.bg-secondary
+{
+    background-color: var(--secondary-color) !important;
+}
+.link
+{
+    text-decoration: none;
+}
+
+.text-primary
+{
+    color: var(--main-color) !important;
+}
+
+.bg-primary
+{
+    background-color: var(--main-color) !important;
+}
+
+.btn-primary
+{
+    background-color:var(--main-color) !important;
+    border-color: var(--main-color) !important; 
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+   
+    background-color:var(--mode-whiteteal-color);
+    text-align: center;
+}
+
+.footer-bottom-nav {
+    display: inline-block;
+    padding: 0 10px;
+    text-decoration: none;
+    color: #1a1b27;
+  }
+
+
+
+.form-control
+{
+    border-radius: 10px;
 }
