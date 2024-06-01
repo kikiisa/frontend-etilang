@@ -30,13 +30,15 @@ const handleLogin = async () => {
   }
   if(status == 401)
   {
-    console.log(401,response.response.data.message);
+    // console.log(401,response.response.data);
+    form.password = ""
+      
     toastError(response.response.data.message)
   }
   if(status == 200)
   { 
     router.push("/home")
-    console.log(200,response);
+    // console.log(200,response);
   }
 };
 </script>
