@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/detail/:id/category/:category',
       name: 'detail',
-      component: DetailView
+      component: DetailView,
     }
   ]
 })

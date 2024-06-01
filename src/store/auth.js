@@ -14,6 +14,21 @@ export const useAuthStore = defineStore({
 },
   
   actions: {
+    async logout()
+    {
+        try {
+            const response = await axios.post(`${service2}logout`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            this.authUser = null;
+            window.localStorage.removeItem("token")
+            return true
+        } catch (error) {
+            return false
+        }
+    },
     async verify()
     {   
         let token = window.localStorage.getItem("token");

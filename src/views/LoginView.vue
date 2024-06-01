@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../store/auth";
 import { toastError } from "../utils/Toast";
@@ -9,6 +9,12 @@ const form = reactive({
 });
 const errorNotif = ref([])
 const router = useRouter();
+onMounted(async() => {
+  if(await useAuthStore().verify() == true)
+  {
+    router.push("/home")
+  }
+})
 const handleLogin = async () => {
   const response = await useAuthStore().login(form.email, form.password);
   const {status} = response.request

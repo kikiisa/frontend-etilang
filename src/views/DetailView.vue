@@ -4,11 +4,15 @@ import MenuComponents from "../components/MenuComponents.vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
 import { service2 } from "../utils/Api";
+import { useAuthStore } from "../store/auth";
+import LoadingComponentsVue from "../components/LoadingComponents.vue";
+const loading = ref(null)
 const detailData = reactive({
   plat_nomor: "",
   jenis_kendaraan: "",
   nama_pemilik: "",
 });
+const auth = useAuthStore();
 const router = useRoute();
 const id = computed(() => router.params.id);
 const category = computed(() => router.params.category);
@@ -28,13 +32,22 @@ const fetchData = async () => {
       console.log(error);
     });
 };
-onMounted(() => {
+onMounted(async() => {
+  setTimeout(async() => {
+    const authStore = useAuthStore();
+    loading.value = true
+    // console.log(await authStore.verify());
+    if(await authStore.verify() == false)
+    {
+      router.push("/"); 
+    }
+  },3000)
   fetchData();
 });
 </script>
 <template>
-  
-  <div class="home">
+  <LoadingComponentsVue v-if="loading == null"/>
+  <div class="home" v-else>
     <MenuComponents />
     <div class="row justify-content-center">
       <div class="col-lg-12">
