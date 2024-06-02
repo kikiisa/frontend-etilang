@@ -7,11 +7,14 @@ import {useAuthStore} from "../store/auth"
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import LoadingComponentsVue from '../components/LoadingComponents.vue';
+
+import ModalComponentsAngkutanPlatKuningVue from '../components/ModalComponentsAngkutanPlatKuning.vue';
 export default {
   components: {
     cameraComponents,
     NavbarComponents,
     ModalComponentsAngkutanUmun,
+    ModalComponentsAngkutanPlatKuningVue,
     MenuComponents,
     LoadingComponentsVue
   },
@@ -40,5 +43,6 @@ export default {
       <MenuComponents/>
       <cameraComponents/>
       <ModalComponentsAngkutanUmun/>
+      <ModalComponentsAngkutanPlatKuningVue/>
   </main>
 </template>

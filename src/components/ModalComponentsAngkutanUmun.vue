@@ -1,7 +1,7 @@
 <template>
   <div
-    class="modal fade"
-    id="angkutan_umum_orang"
+    class="modal"
+    id="add1"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"

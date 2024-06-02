@@ -111,7 +111,7 @@ export default {
           <div class="bg-info p-4 rounded-4 text-center text-light fw-bold mb-3">
             Foto Plat Nomor Kendaraan 📷
           </div>
-          <div class="alert alert-info" v-if="message != ''">{{ message }}</div>
+          <div class="bg-danger p-2 rounded text-center text-white fw-bold mb-3" v-if="message != ''">{{ message }} 😊</div>
           <camera ref="camera" v-if="isLoading == null" autoplay></camera>
           <LoadingComponents v-if="isLoading == true" class="text-center" />
           <input
@@ -137,13 +137,13 @@ export default {
             </div>
           </div>
           <div class="add-data" v-if="category == 0">
-              <button class="btn btn-dark mt-3 fw-bold">+ Angkutan Umum Orang</button>
-              <button class="btn btn-dark mt-3 fw-bold ms-2">+ Plat Kuning</button>
+            <button class="btn btn-outline-primary mt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#add1">Angkutan Umum Orang</button>
+            <button class="btn btn-outline-warning mt-3 fw-bold ms-1" data-bs-toggle="modal" data-bs-target="#add2">Kendaraan Plat Kuning</button>
           </div>
           <button class="btn btn-primary fw-bold mt-2" v-if="resultOcr == ''" @click="recognizePicture">
             Scan Plat Nomor
           </button>
-          <button class="btn btn-dark fw-bold mt-2" @click="resetData">
+          <button class="btn btn-dark fw-bold mt-2 ms-2" @click="resetData">
             Reset
           </button>
         </div>

@@ -54,9 +54,8 @@ onMounted(async() => {
         <div class="card border-0">
           <div class="card-body">
             <h5 class="mt-4 mb-2">Detail Data</h5>
-            <div class="alert alert-warning fw-bold" v-if="category == 1">Angkutan Plat Kuning <strong>{{ detailData.nomor_kendaraan }}</strong></div>  
+            <div class="alert alert-info fw-bold" v-if="category == 1">Angkutan Angkutan Umum Orang <strong>{{ detailData.nomor_kendaraan }}</strong></div>  
             <div class="alert alert-warning fw-bold" v-if="category == 2">Angkutan Plat Kuning <strong>{{ detailData.nomor_kendaraan }}</strong></div>  
-            
             <div class="form-group mb-3">
               <label for="namaPemilik" class="mb-2">Nama Pemilik</label>
               <input
