@@ -15,6 +15,7 @@ const fetchData = async () => {
   try {
     const response = await axios.get(`${service2}latest-data`);
     const {data_opd,data_kir} = response.data
+    console.log(response);
     dataResponseOpd.value = data_opd
     dataResponseKir.value = data_kir
   } catch (error) {
@@ -82,7 +83,7 @@ onMounted(async () => {
               >
                 <div class="list-data">
                     <div class="list-data-angkutan-umum-orang">
-                        <ul class="list-group mt-2" v-for="data1 in dataResponseOpd" :key="data1.id">
+                        <ul class="list-group mt-2" v-for="data1 in dataResponseOpd" :key="data1.id"> 
                             <li class="list-group-item"><p>Plat Nomor : <strong>{{ data1.plat_nomor }}</strong></p> <router-link :to="{name: 'detail', params: {id: data1.id,category: 1}}" class="btn btn-primary">Detail</router-link></li>
                         </ul>
                     </div>
@@ -98,7 +99,7 @@ onMounted(async () => {
                 <div class="list-data" v-if="dataResponseKir.length > 0">
                     <div class="list-data-angkutan-umum-orang">
                         <ul class="list-group mt-2" v-for="dataKir in dataResponseKir" :key="dataKir.id">
-                            <li class="list-group-item"><p>Plat Nomor : <strong>DM 123 AA</strong></p> <router-link :to="{name: 'detail', params: {id: data1.id,category: 1}}" class="btn btn-primary">Detail</router-link></li>
+                            <li class="list-group-item"><p>Plat Nomor : <strong>DM 123 AA</strong></p> <router-link :to="{name: 'detail', params: {id: dataKir.id,category: 2}}" class="btn btn-primary">Detail</router-link></li>
                         </ul>
                     </div>
                 </div> 

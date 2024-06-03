@@ -61,6 +61,7 @@ const handleLogin = async () => {
               <div class="form-group">
                 <label for="email" class="fw-bold">Email</label>
                 <input
+                  required
                   type="text"
                   v-model="form.email"
                   placeholder="Enter Email"
@@ -70,6 +71,7 @@ const handleLogin = async () => {
               <div class="form-group mt-3">
                 <label for="password" class="fw-bold">Password</label>
                 <input
+                 required
                   type="password"
                   id="password"
                   v-model="form.password"

@@ -5,11 +5,16 @@ import { dataURLToBlob, filterSpasi, nameFileRandom } from "../utils/blob";
 import { service1, service2 } from "../utils/Api";
 import LoadingComponents from "./LoadingComponents.vue";
 import { toastError, toastSuccess } from "../utils/Toast";
+import ModalComponentsAngkutanUmun from "../components/ModalComponentsAngkutanUmun.vue";
+import ModalComponentsAngkutanPlatKuningVue from '../components/ModalComponentsAngkutanPlatKuning.vue';
+
 import axios from "axios";
 export default {
   components: {
     Camera,
     LoadingComponents,
+    ModalComponentsAngkutanPlatKuningVue,
+    ModalComponentsAngkutanUmun,
   },
   setup() {
     const camera = ref(Camera);
@@ -25,10 +30,6 @@ export default {
       isLoading.value = null;
       window.location.reload();
     };
-    const detail = () => 
-    {
-
-    }
     const recognizePicture = async () => {
       const file = await camera.value?.snapshot();
       let reader = new FileReader();
@@ -52,7 +53,7 @@ export default {
           })
           .then((response) => {
             if (response.data.result == "") {
-              console.log(response.data.result);
+              
               isLoading.value = false;
               toastError("Plat Nomor Tidak Terdeteksi");
             } else {
@@ -66,17 +67,12 @@ export default {
                       data: response.data.result,
                     }
                   );
-                  console.log(responseInfoPlatNumber);
                   data_plat.value = responseInfoPlatNumber.data.data;
                   category.value = responseInfoPlatNumber.data.category;
                   message.value  = responseInfoPlatNumber.data.message;
                 } catch (error) {
-                  console.error(
-                    "Terjadi kesalahan saat melakukan validasi:",
-                    error
-                  );
-                  // Tangani error jika request gagal
-
+                  toastError(error)
+                  // Tangani error jika request gaga
                 }
               }, 2000);
             }
@@ -111,7 +107,7 @@ export default {
           <div class="bg-info p-4 rounded-4 text-center text-light fw-bold mb-3">
             Foto Plat Nomor Kendaraan 📷
           </div>
-          <div class="bg-danger p-2 rounded text-center text-white fw-bold mb-3" v-if="message != ''">{{ message }} 😊</div>
+          <div class="bg-danger p-2 rounded text-center text-white fw-bold mb-3" v-if="category == 0">{{ message }} 😊</div>
           <camera ref="camera" v-if="isLoading == null" autoplay></camera>
           <LoadingComponents v-if="isLoading == true" class="text-center" />
           <input
@@ -136,7 +132,7 @@ export default {
               </ul>
             </div>
           </div>
-          <div class="add-data" v-if="category == 0">
+          <div class="add-data" v-if="category == 0" >
             <button class="btn btn-outline-primary mt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#add1">Angkutan Umum Orang</button>
             <button class="btn btn-outline-warning mt-3 fw-bold ms-1" data-bs-toggle="modal" data-bs-target="#add2">Kendaraan Plat Kuning</button>
           </div>
@@ -150,6 +146,8 @@ export default {
       </div>
     </div>
   </div>
+  <ModalComponentsAngkutanPlatKuningVue :platnumber="resultOcr"/>
+  <ModalComponentsAngkutanUmun :platnumber="resultOcr"/>
 </template>
 <style scoped>
 .camera {
