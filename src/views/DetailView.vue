@@ -11,6 +11,7 @@ const loading = ref(null)
 const auth = useAuthStore();
 const router = useRouter();
 const id = computed(() => useRoute().params.id);
+const responseDataKir = ref(null)
 let datas = reactive({})
 const category = computed(() => useRoute().params.category);
 const fetchData = async () => {
@@ -23,11 +24,17 @@ const fetchData = async () => {
     }) 
 
      datas = response.data.data
-      console.log(response.data.data);
-  } catch (error) {
+     console.log(datas.plat_nomor ? datas.plat_nomor : datas.nomor_kendaraan);
+     let getDataKir = await axios.get(`${service2}detail-kir/${datas.plat_nomor ? datas.plat_nomor : datas.nomor_kendaraan}`) 
+     responseDataKir.value = getDataKir.data.status_kir
+     console.log(responseDataKir.value);
+
+
+     
+    } catch (error) {
     console.log(error);
   }
-  console.log("ok");
+  
 };
 onMounted(async() => {
   setTimeout(async() => {
@@ -52,14 +59,17 @@ onMounted(async() => {
           <div class="card-body">
             <h5 class="mt-4 mb-2">Detail Data</h5>
             <div class="alert alert-info fw-bold" v-if="category == 1">Angkutan Angkutan Umum Orang <strong></strong></div>  
-            <div class="alert alert-warning fw-bold" v-if="category == 2">Angkutan Plat Kuning <strong></strong></div>  
+            <div class="alert alert-warning fw-bold" v-if="category == 2">Angkutan Umum Barang <strong></strong></div>  
             <div class="form-group mb-3">
             </div>
             <div v-for="(value, key) in datas" :key="key" class="form-group mb-2">
-             
               <label class="mb-2">{{ formatLabel(key) }}</label>
-              <input class="form-control" v-if="typeof value === 'string'" v-model="datas[key]" :placeholder="formatLabel(key)"  />
+              <input disabled class="form-control" v-if="typeof value === 'string'" v-model="datas[key]" :placeholder="formatLabel(key)"  />
               <textarea class="form-control" v-if="typeof value === 'text'" v-model="datas[key]" :placeholder="formatLabel(key)"></textarea>
+            </div>
+            <div class="form-group" v-if="responseDataKir">
+              <h5 class="fw-bold mt-3">Riwayat Pembayaran Kir</h5>
+              <input type="text" v-model="responseDataKir" class="form-control mt-2 mb-2" disabled>
             </div>
             <router-link to="/home" class="btn btn-primary">Kembali</router-link>
           </div>

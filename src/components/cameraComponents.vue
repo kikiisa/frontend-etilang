@@ -133,8 +133,8 @@ export default {
             </div>
           </div>
           <div class="add-data" v-if="category == 0" >
-            <button class="btn btn-outline-primary mt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#add1">Angkutan Umum Orang</button>
-            <button class="btn btn-outline-warning mt-3 fw-bold ms-1" data-bs-toggle="modal" data-bs-target="#add2">Kendaraan Plat Kuning</button>
+            <button class="btn btn-outline-warning mt-3 fw-bold" data-bs-toggle="modal" data-bs-target="#add1">Angkutan Umum Orang </button>
+            <button class="btn btn-outline-warning mt-3 fw-bold ms-1" data-bs-toggle="modal" data-bs-target="#add2">Angkutan Umum Barang</button>
           </div>
           <button class="btn btn-primary fw-bold mt-2" v-if="resultOcr == ''" @click="recognizePicture">
             Scan Plat Nomor

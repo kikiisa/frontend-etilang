@@ -66,7 +66,7 @@ const handlePost = async () => {
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">
-            Tambah Data Plat Kuning 
+            Angkutan Umum Barang
           </h1>
           <button
             type="button"

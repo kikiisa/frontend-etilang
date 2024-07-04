@@ -97,6 +97,16 @@ const handleSubmit = async () =>
                 placeholder="Nama Pemilik"
               />
             </div>
+            <!-- <div class="form-group mb-2">
+              <label>Nomor Telepon </label>
+              <input
+                required
+                type="text"
+              
+                class="form-control"
+                placeholder="Nomor Telephon / Whatsapps"
+              />
+            </div> -->
             <div class="form-group mb-2">
               <label>Badan Usaha </label>
               <input
@@ -109,7 +119,7 @@ const handleSubmit = async () =>
             </div>
             
             <div class="form-group mb-2">
-              <label>Tahun </label>
+              <label>Tahun Pembuatan</label>
               <input
                 required
                 type="text"

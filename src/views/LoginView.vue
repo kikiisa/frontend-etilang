@@ -48,12 +48,13 @@ const handleLogin = async () => {
       <div class="col-lg-10">
         <div class="text-center">
           <img
-            src="https://andalalin-go.gorontaloprov.go.id/theme/images/gorontalo.svg"
-            width="75"
+            src="https://cdn-icons-png.flaticon.com/128/3012/3012075.png"
+            width="50"
             alt=""
             srcset=""
           />
         </div>
+        <h4 class="fw-bold text-center mt-3">E-Tilang | Provinsi Gorontalo</h4>
         <div class="card border-0 shadow mt-4">
           <div class="card-body">
             <form @submit.prevent="handleLogin">

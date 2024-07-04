@@ -69,7 +69,7 @@ onMounted(async () => {
                   aria-controls="pills-profile"
                   aria-selected="false"
                 >
-                Plat Kuning
+                Data Angkutan Umum Barang
                 </button>
               </li>
             </ul>
@@ -82,10 +82,13 @@ onMounted(async () => {
                 tabindex="0"
               >
                 <div class="list-data">
-                    <div class="list-data-angkutan-umum-orang">
+                    <div class="list-data-angkutan-umum-orang" v-if="dataResponseOpd.length > 0">
                         <ul class="list-group mt-2" v-for="data1 in dataResponseOpd" :key="data1.id"> 
                             <li class="list-group-item"><p>Plat Nomor : <strong>{{ data1.plat_nomor }}</strong></p> <router-link :to="{name: 'detail', params: {id: data1.id,category: 1}}" class="btn btn-primary">Detail</router-link></li>
                         </ul>
+                    </div>
+                    <div class="bg-danger rounded-2 p-2 text-white" v-else>
+                      Data Belum Tersedia 
                     </div>
                 </div> 
               </div>
