@@ -26,13 +26,9 @@ const fetchData = async () => {
      datas = response.data.data
      console.log(datas.plat_nomor ? datas.plat_nomor : datas.nomor_kendaraan);
      let getDataKir = await axios.get(`${service2}detail-kir/${datas.plat_nomor ? datas.plat_nomor : datas.nomor_kendaraan}`) 
-     responseDataKir.value = getDataKir.data.status_kir
-     console.log(responseDataKir.value);
-
-
-     
+     responseDataKir.value = getDataKir.data.status_kir     
     } catch (error) {
-    console.log(error);
+     responseDataKir.value = null
   }
   
 };
@@ -55,7 +51,7 @@ onMounted(async() => {
     <MenuComponents/>
     <div class="row justify-content-center">
       <div class="col-lg-12">
-        <div class="card border-0">
+      <div class="card border-0">
           <div class="card-body">
             <h5 class="mt-4 mb-2">Detail Data</h5>
             <div class="alert alert-info fw-bold" v-if="category == 1">Angkutan Angkutan Umum Orang <strong></strong></div>  
@@ -64,14 +60,31 @@ onMounted(async() => {
             </div>
             <div v-for="(value, key) in datas" :key="key" class="form-group mb-2">
               <label class="mb-2">{{ formatLabel(key) }}</label>
-              <input disabled class="form-control" v-if="typeof value === 'string'" v-model="datas[key]" :placeholder="formatLabel(key)"  />
-              <textarea class="form-control" v-if="typeof value === 'text'" v-model="datas[key]" :placeholder="formatLabel(key)"></textarea>
+              <div v-if="value == 1">
+                <span class="badge bg-success">Berlaku</span>
+              </div>
+              <div v-else-if="value == 2">
+                <div class="badge bg-warning">Tidak Valid</div>
+              </div>
+              <div v-else-if="value == 0">
+                <span class="badge bg-danger">Tidak Berlaku</span>
+              </div>
+              <div v-else>
+                <input disabled class="form-control" v-if="typeof value === 'string'" v-model="datas[key]" :placeholder="formatLabel(key)"  />
+                <textarea class="form-control" v-if="typeof value === 'text'" v-model="datas[key]" :placeholder="formatLabel(key)"></textarea>
+              </div>
+            
             </div>
-            <div class="form-group" v-if="responseDataKir">
+            <div class="form-group" v-if="responseDataKir != null">
+              <h5 class="fw-bold mt-3">Status Pembayaran Kir</h5>
+              <div class="badge bg-success"  v-if="responseDataKir == 1">Status Kir Masih Berlaku</div>
+              <div class="badge bg-danger"  v-if="responseDataKir == 0">Status Kir Tidak Berlaku</div>
+            </div>
+            <div v-else>
               <h5 class="fw-bold mt-3">Riwayat Pembayaran Kir</h5>
-              <input type="text" v-model="responseDataKir" class="form-control mt-2 mb-2" disabled>
+              <div class="badge bg-warning"  v-if="responseDataKir == null">Status Kir Tidak Di Ketahui</div>
             </div>
-            <router-link to="/home" class="btn btn-primary">Kembali</router-link>
+            <router-link to="/home" class="btn btn-primary mt-3">Kembali</router-link>
           </div>
         </div>
       </div>
