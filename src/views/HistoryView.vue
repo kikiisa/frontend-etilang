@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 import MenuComponents from "../components/MenuComponents.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -7,7 +7,6 @@ import { service2 } from "../utils/Api";
 import { useAuthStore } from "../store/auth";
 import LoadingComponentsVue from "../components/LoadingComponents.vue";
 const loading = ref(null);
-const auth = useAuthStore();
 const router = useRouter();
 const dataResponseOpd = ref([]);
 const dataResponseKir = ref([]);
@@ -102,7 +101,7 @@ onMounted(async () => {
                 <div class="list-data" v-if="dataResponseKir.length > 0">
                     <div class="list-data-angkutan-umum-orang">
                         <ul class="list-group mt-2" v-for="dataKir in dataResponseKir" :key="dataKir.id">
-                            <li class="list-group-item"><p>Plat Nomor : <strong>DM 123 AA</strong></p> <router-link :to="{name: 'detail', params: {id: dataKir.id,category: 2}}" class="btn btn-primary">Detail</router-link></li>
+                            <li class="list-group-item"><p>Plat Nomor : <strong>{{ dataKir.nomor_kendaraan }}</strong></p> <router-link :to="{name: 'detail', params: {id: dataKir.id,category: 2}}" class="btn btn-primary">Detail</router-link></li>
                         </ul>
                     </div>
                 </div> 
