@@ -18,7 +18,8 @@ const sendForm = reactive({
   nama_pemilik: "",
   tahun: "",
   keterangan: "",
-  jenis_kendaraan:""
+  jenis_kendaraan:"",
+  "phone":"",
 });
 
 watch(
@@ -38,6 +39,8 @@ const handlePost = async () => {
         sendForm.keterangan = ""
         sendForm.tahun = ""
         sendForm.jenis_kendaraan = ""
+        sendForm.phone = ""
+
         toastSuccess("Berhasil Menambahkan Kendaraan")
         window.location.reload();
     }else{
@@ -129,6 +132,10 @@ const handlePost = async () => {
                   <option value="Mini Bus">Mini Bus</option>
                   <option value="Kontainer">Kontainer</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="phone" class="mb-2">Nomor Telephone / Whatsapps</label>
+                <input type="text" placeholder="Phone" v-model="sendForm.phone" class="form-control">
               </div>
               <div class="form-group mb-3">
                 <label for="merek" class="mb-2">Keterangan</label>

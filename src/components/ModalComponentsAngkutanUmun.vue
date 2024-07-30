@@ -17,6 +17,7 @@ const formData = reactive({
   badan_usaha: "",
   tahun: "",
   izin_trayek:"",
+  "phone":"",
 });
 
 watch(
@@ -36,10 +37,14 @@ const handleSubmit = async () =>
         formData.nama_pemilik = ""
         formData.badan_usaha = ""
         formData.tahun = ""
-        formData.izin_trayek = ""     
-        useRouter().push("/home")
+        formData.izin_trayek = ""   
+        formData.phone = ""  
+        // useRouter().push("/home")
         toastSuccess("Berhasil Menambahkan Kendaraan")
-        window.location.reload()
+        setTimeout(() => {
+          window.location.reload()
+        },2000)
+
     }else{
         toastError("Terjadi Kesalahan")
     }
@@ -97,16 +102,16 @@ const handleSubmit = async () =>
                 placeholder="Nama Pemilik"
               />
             </div>
-            <!-- <div class="form-group mb-2">
+            <div class="form-group mb-2">
               <label>Nomor Telepon </label>
               <input
                 required
                 type="text"
-              
+                v-model="formData.phone"
                 class="form-control"
                 placeholder="Nomor Telephon / Whatsapps"
               />
-            </div> -->
+            </div>
             <div class="form-group mb-2">
               <label>Badan Usaha </label>
               <input

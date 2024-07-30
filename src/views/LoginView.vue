@@ -48,14 +48,14 @@ const handleLogin = async () => {
       <div class="col-lg-10">
         <div class="text-center">
           <img
-            src="https://cdn-icons-png.flaticon.com/128/3012/3012075.png"
-            width="50"
+            src="../assets/logo.webp"
+            width="130"
             alt=""
             srcset=""
           />
         </div>
-        <h4 class="fw-bold text-center mt-3">E-Tilang | Provinsi Gorontalo</h4>
-        <div class="card border-0 shadow mt-4">
+        <h4 class="fw-bold text-center mt-3">ON-SIGHT | Provinsi Gorontalo</h4>
+        <div class="card shadow mt-4">
           <div class="card-body">
             <form @submit.prevent="handleLogin">
               <h5 class="text-start">Login To Account</h5>
@@ -90,12 +90,17 @@ const handleLogin = async () => {
 </template>
 <style scoped>
 .card {
-  border-radius: 20px;
+  border-width: 4px;
+  border-top-right-radius: 20px;
+  border-style: solid;
+  border-right-color: var(--main-color);
+  
 }
 input {
-  border-radius: 30px;
+  border-radius: 10px;
 }
 button {
   border-radius: 30px;
 }
+
 </style>
