@@ -9,7 +9,6 @@ import LoadingComponentsVue from "../components/LoadingComponents.vue";
 import { toastError, toastSuccess } from "../utils/Toast";
 const loading = ref(null)
 const auth = useAuthStore();
-
 const detailData = reactive({
   id:"",
   nama: "",

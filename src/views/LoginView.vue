@@ -48,7 +48,7 @@ const handleLogin = async () => {
       <div class="col-lg-10">
         <div class="text-center">
           <img
-            src="../assets/logo.webp"
+            src="http://103.175.220.104/static/2024-08-14T15-41-16.177Z.png"
             width="130"
             alt=""
             srcset=""
