@@ -40,8 +40,7 @@ export default {
         let blob = dataURLToBlob(result);
         const formData = new FormData();
         formData.append(
-          "image",
-          new File([blob], `${nameFileRandom("scan-")}.png`, {
+          "image",new File([blob], `${nameFileRandom("scan-")}.png`, {
             type: "image/png",
           })
         );
@@ -82,7 +81,6 @@ export default {
             toastError("Terjadi Kesalahan !");
             console.log(err);
           });
-        // serviceImage(new File([blob], `${nameFileRandom('scan-')}.png`, { type: 'image/png' }))
       };
     };
     return {
