@@ -122,6 +122,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.20.2.tgz#9c907b21e30a52db959ba4f80bb01a0cc403d5cc"
   integrity sha512-N49X4lJX27+l9jbLKSqZ6bKNjzQvHaT8IIFUy+YIqmXQdjYCToGWwOItDrfby14c78aDd5NHQl29xingXfCdLQ==
 
+"@google/generative-ai@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@google/generative-ai/-/generative-ai-0.17.0.tgz#8a3d360e60b308a2fd1ae139529d6308aa95d32d"
+  integrity sha512-HNIrX4x6EY5UPOTTDC5DepBFVluognTXR0MTWLiSVsJmzqdEYxGtz/9NWIknUbPNnPZOu7N1BoA/Ho24aPUh3g==
+
 "@jridgewell/sourcemap-codec@^1.4.15":
   version "1.4.15"
   resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz#d7c6e6755c78567a951e04ab52ef0fd26de59f32"

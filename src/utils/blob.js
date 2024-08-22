@@ -13,6 +13,16 @@ function dataURLToBlob(dataURL) {
     return new Blob([ia], {type:mimeString});
 }
 
+function base64ToBlob(base64, mimeType) {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+}
+
 function nameFileRandom(file) {
     return file + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
@@ -29,4 +39,4 @@ function filterSpasi(kalimat)
     return tanpaSpasiDanKurung
 }
 
-export { dataURLToBlob,nameFileRandom,filterSpasi }
+export { dataURLToBlob,nameFileRandom,filterSpasi,base64ToBlob }
