@@ -1,4 +1,4 @@
-
+"use strick"
 function dataURLToBlob(dataURL) {
     var byteString;
     if (dataURL.split(',')[0].indexOf('base64') >= 0)

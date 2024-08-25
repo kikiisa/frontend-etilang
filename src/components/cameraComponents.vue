@@ -7,8 +7,8 @@ import LoadingComponents from "./LoadingComponents.vue";
 import { toastError, toastSuccess } from "../utils/Toast";
 import ModalComponentsAngkutanUmun from "../components/ModalComponentsAngkutanUmun.vue";
 import ModalComponentsAngkutanPlatKuningVue from "../components/ModalComponentsAngkutanPlatKuning.vue";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
+import { fetchViaApi, sendResponse } from "../utils/ServiceGoogle";
 export default {
   components: {
     Camera,
@@ -17,20 +17,12 @@ export default {
     ModalComponentsAngkutanUmun,
   },
   setup() {
-    const api_key = "AIzaSyCuY8fqvs2NCUJ6L7-2gHAGUwL6wBmH6fc";
-    const genAi = new GoogleGenerativeAI(api_key);
     const camera = ref(Camera);
     const isLoading = ref(null);
     const resultOcr = ref("");
     const data_plat = ref([]);
     const category = ref(null);
     const message = ref("");
-    const model = genAi.getGenerativeModel({
-      // Choose a Gemini model.
-      model: "gemini-1.5-pro",
-    });
-    const mimeType = "image/png";
-    // Initialize GoogleAIFileManager with your API_KEY.
     const resetData = () => {
       resultOcr.value = "";
       data_plat.value = [];
@@ -47,7 +39,25 @@ export default {
         let result = reader.result;
         let blob = dataURLToBlob(result);
         let finalNameImage = new File([blob], `${nameFileRandom("scan-")}.png`);
-
+        let formData = new FormData();
+        formData.append(
+          "image",new File([blob], `${nameFileRandom("scan-")}.png`, {
+            type: "image/png",
+          })
+        );
+        try {
+            let sendFileToServer = await axios.post(`http://localhost:3000/api/handle-file`,formData,{
+              headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+            })           
+            console.log(sendFileToServer.data)
+        } catch (error) {
+          console.log("error",error);
+          
+          // toastError(error.response.data.message)
+        }
+       
       };
     };
     return {
