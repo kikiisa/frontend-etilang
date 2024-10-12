@@ -7,7 +7,7 @@ import LoadingComponents from "./LoadingComponents.vue";
 import { toastError, toastSuccess } from "../utils/Toast";
 import ModalComponentsAngkutanUmun from "../components/ModalComponentsAngkutanUmun.vue";
 import ModalComponentsAngkutanPlatKuningVue from '../components/ModalComponentsAngkutanPlatKuning.vue';
-
+import debounce from "../utils/Debounce";
 import axios from "axios";
 export default {
   components: {
@@ -30,6 +30,21 @@ export default {
       isLoading.value = null;
       window.location.reload();
     };
+    const searchByKeyup = async () => 
+    {
+      if(resultOcr.value != "")
+      {
+        const response = await axios.post(`${service2}search-plat-number`,{
+          data:resultOcr.value
+          
+        }) 
+        data_plat.value = response.data.data;
+        category.value = response.data.category;
+        message.value  = response.data.message;
+      }
+    }
+    const searchData = debounce(searchByKeyup,2000);
+
     const recognizePicture = async () => {
       const file = await camera.value?.snapshot();
       let reader = new FileReader();
@@ -48,6 +63,7 @@ export default {
           .post(service1 + "service-image", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
+
             },
           })
           .then((response) => {
@@ -64,6 +80,7 @@ export default {
                     `${service2}search-plat-number`,
                     {
                       data: response.data.result,
+
                     }
                   );
                   data_plat.value = responseInfoPlatNumber.data.data;
@@ -91,12 +108,13 @@ export default {
       resultOcr,
       data_plat,
       category,
-      message
+      message,
+      searchByKeyup,
+      searchData
     };
   },
 };
 </script>
-
 <template>
   <div class="row justify-content-center">
     <div class="col-lg-12">
@@ -106,15 +124,17 @@ export default {
             Foto Plat Nomor Kendaraan 📷
           </div>
           <div class="bg-danger p-2 rounded text-center text-white fw-bold mb-3" v-if="category == 0">{{ message }} 😊</div>
-          <camera ref="camera" v-if="isLoading == null" autoplay></camera>
-          <LoadingComponents v-if="isLoading == true" class="text-center" />
           <input
-            v-if="isLoading == false"
+            
             type="text"
             v-model="resultOcr"
-            class="form-control"
-            disabled
+            class="form-control mb-3"
+            @keyup="searchData"
+            placeholder="Cari Secara Manual"
           />
+          <LoadingComponents v-if="isLoading == true" class="text-center" />
+          <camera ref="camera" v-if="isLoading == null || resultOcr.length > 0" autoplay></camera>
+         
           <div class="list-data" v-if="data_plat.length > 0">
             <div class="list-data-angkutan-umum-orang" v-if="category == 1">
               <h5 class="mb-2 mt-3">Data Plat Nomor Angkutan Umum Orang</h5>
@@ -126,7 +146,6 @@ export default {
               <h5 class="mb-2 mt-3">Data Plat Kuning</h5>
               <ul class="list-group mt-2" v-for="data in data_plat" :key="data.id">
                 <li class="list-group-item"><p>Plat Nomor : <strong>{{ data.nomor_kendaraan }}</strong></p> <router-link :to="{name: 'detail', params: {id: data.id,category: 2}}" class="btn btn-primary">Detail</router-link></li>
-              
               </ul>
             </div>
           </div>
