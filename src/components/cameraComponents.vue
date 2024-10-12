@@ -133,7 +133,7 @@ export default {
             placeholder="Cari Secara Manual"
           />
           <LoadingComponents v-if="isLoading == true" class="text-center" />
-          <camera ref="camera" v-if="isLoading == null || resultOcr.length > 0" autoplay></camera>
+          <camera ref="camera" v-if="isLoading == null " autoplay></camera>
          
           <div class="list-data" v-if="data_plat.length > 0">
             <div class="list-data-angkutan-umum-orang" v-if="category == 1">
