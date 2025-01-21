@@ -7,7 +7,6 @@ import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import LoadingComponentsVue from '../components/LoadingComponents.vue';
 
-
 export default {
   components: {
     cameraComponents,

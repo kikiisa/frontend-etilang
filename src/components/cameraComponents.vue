@@ -134,7 +134,7 @@ export default {
           />
           <LoadingComponents v-if="isLoading == true" class="text-center" />
           <camera ref="camera" v-if="isLoading == null " autoplay></camera>
-         
+      
           <div class="list-data" v-if="data_plat.length > 0">
             <div class="list-data-angkutan-umum-orang" v-if="category == 1">
               <h5 class="mb-2 mt-3">Data Plat Nomor Angkutan Umum Orang</h5>

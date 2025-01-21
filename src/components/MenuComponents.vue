@@ -15,7 +15,6 @@ const logout = async () =>
   <section class="container">
       <div class="mb-0 mt-2">
         <h6 class="mb-2">Selamat Datang,<span class="fw-bold ms-2">{{ auth.authUser?.name }}</span></h6>
-
         <div class="row row-cols-4 g-2">
           <router-link  to="home" class="col-md-4 home-menu" style="width: 25%;text-decoration: none;">
                 <div class="text-center p-2">
